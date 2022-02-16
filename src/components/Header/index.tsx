@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { MdShoppingBasket } from 'react-icons/md';
 
@@ -23,7 +22,7 @@ const Header = (): JSX.Element => {
             {cartSize === 1 ? `${cartSize} item` : `${cartSize} itens`}
           </span>
         </div>
-        <MdShoppingBasket size={36} color="#FFF" />
+        <MdShoppingBasket size={36} color="#ffffff" />
       </Cart>
     </Container>
   );
