@@ -25,10 +25,10 @@ const Cart = (): JSX.Element => {
     subTotal: formatPrice(product.price * product.amount),
   }));
 
-  const totalCart = cart.length > 0 ? (cart.reduce((sumTotal, product) => {
+  const totalCart = cart.reduce((sumTotal, product) => {
     sumTotal += product.amount * product.price;
     return sumTotal;
-  }, 0)) : 0
+  }, 0)
 
   const totalCartFormatted = formatPrice(totalCart);
 
@@ -37,6 +37,10 @@ const Cart = (): JSX.Element => {
       productId: product.id,
       amount: product.amount + 1
     }
+
+    console.log(cart);
+    console.log(product.id)
+    console.log(newQuantityProduct)
 
     updateProductAmount(newQuantityProduct);
   }
@@ -47,10 +51,16 @@ const Cart = (): JSX.Element => {
       amount: product.amount - 1
     }
 
+    console.log(cart);
+    console.log(product.id)
+    console.log(newQuantityProduct)
+
     updateProductAmount(newQuantityProduct);
   }
 
   function handleRemoveProduct(productId: number) {
+    console.log(cart);
+    console.log(productId)
     removeProduct(productId);
   }
 
