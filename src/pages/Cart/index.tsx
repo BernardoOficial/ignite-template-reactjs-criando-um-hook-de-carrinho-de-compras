@@ -15,32 +15,26 @@ interface Product {
 const Cart = (): JSX.Element => {
   const { cart, removeProduct, updateProductAmount } = useCart();
 
+  console.log("UPDATE STATE CARD: ", cart);
+
   const cartFormatted = cart.map(product => ({
-    id: product.id,
-    title: product.title,
-    price: product.price,
-    image: product.image,
-    amount: product.amount,
+    ...product,
     priceFormatted: formatPrice(product.price),
     subTotal: formatPrice(product.price * product.amount),
   }));
 
-  const totalCart = cart.reduce((sumTotal, product) => {
-    sumTotal += product.amount * product.price;
-    return sumTotal;
-  }, 0)
-
-  const totalCartFormatted = formatPrice(totalCart);
+  const total = formatPrice(
+    cart.reduce((sumTotal, product) => {
+      sumTotal += product.amount * product.price;
+      return sumTotal;
+    }, 0)
+  )
 
   function handleProductIncrement(product: Product) {
     const newQuantityProduct = {
       productId: product.id,
       amount: product.amount + 1
     }
-
-    console.log(cart);
-    console.log(product.id)
-    console.log(newQuantityProduct)
 
     updateProductAmount(newQuantityProduct);
   }
@@ -51,16 +45,12 @@ const Cart = (): JSX.Element => {
       amount: product.amount - 1
     }
 
-    console.log(cart);
-    console.log(product.id)
-    console.log(newQuantityProduct)
-
     updateProductAmount(newQuantityProduct);
   }
 
   function handleRemoveProduct(productId: number) {
     console.log(cart);
-    console.log(productId)
+    console.log(productId);
     removeProduct(productId);
   }
 
@@ -78,8 +68,8 @@ const Cart = (): JSX.Element => {
         </thead>
         <tbody>
 
-          {cartFormatted.map((product, index) => (
-            <tr data-testid="product" key={index}>
+          {cartFormatted.map(product => (
+            <tr data-testid="product" key={product.id} >
               <td>
                 <img src={product.image} alt={product.title} />
               </td>
@@ -135,7 +125,7 @@ const Cart = (): JSX.Element => {
 
         <Total>
           <span>TOTAL</span>
-          <strong>{totalCartFormatted}</strong>
+          <strong>{total}</strong>
         </Total>
       </footer>
     </Container>
